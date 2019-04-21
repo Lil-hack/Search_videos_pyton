@@ -7,35 +7,31 @@ import json
 import sys
 import io
 
+def video_to_pHash(video_name, uuid=0):
+
+    cap = cv2.VideoCapture(video_name)
+    keys = 'uuid', 'hash', 'frame'
+    mas_hash = []
+    i=0
+    while True:
+        i=i+1
+        ret, frame = cap.read()
+
+        if not ret:
+            break
+        img = Image.fromarray(frame)
+        hash = imagehash.phash(img, 8)
+
+        values=uuid,str(hash),i
+        video_item = dict(zip(keys, values))
+
+        mas_hash.append(video_item)
+
+    np_data = np.asarray(mas_hash)
+
+    return np.unique(np_data)
+
+
 start_time = time.time()
-video_name='Сериал След «Зайка рыбка птичка…».mp4'
-cap = cv2.VideoCapture(video_name)   # /dev/video0
-
-print(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-mas_hash=[]
-while True:
-  ret, frame = cap.read()
-
-  if not ret:
-    break
-  img = Image.fromarray(frame)
-  hash = imagehash.phash(img,8)
-  mas_hash.append(str(hash))
-
-
-with io.open('playlist6.json', 'w') as json_file:
-    data = json.dumps(mas_hash)
-    json_file.write(data)
-
-print(str(mas_hash))
-print (len(mas_hash))
-# cv2.imshow('window_name', frame) # show frame on window
-# hash = imagehash.average_hash(frame)
-hash2 = imagehash.phash(Image.open('Test_gray.jpg'),32)
-
-print(Image.open('Test_gray.jpg'))
-# print(hash)
-print(hash2)
-
-
-print("--- %s seconds ---" % (time.time() - start_time))
+print(video_to_pHash('Whatsapp Love Status Video2017(20Sec).mp4',0))
+print("--- %s seconds main ---" % (time.time() - start_time))

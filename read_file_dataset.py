@@ -8,11 +8,12 @@ import sys
 import io
 import threading
 import pybktree
-from fuzzywuzzy import fuzz
+
 
 def fuzzy_distance(s1, s2):
-    similarity = fuzz.token_sort_ratio(s1, s2)
-    distance = -1 * (similarity - 100)
+    # similarity = fuzz.token_sort_ratio(s1, s2)
+    # distance = -1 * (similarity - 100)
+    distance=imagehash.hex_to_hash(s1)-imagehash.hex_to_hash(s2)
     return distance
 
 
@@ -32,11 +33,12 @@ data = []
 with open('playlist6.json', 'r') as f:
     data = json.loads(f.read())
 
-last_foto='82ff2b9249969b89'
+last_foto='f2f3cccc33262a23'
 hash=imagehash.hex_to_hash(last_foto)
 print(hash)
-
-print(len(data)//5)
+np_data=np.asarray(data)
+print(np_data)
+print(len(np.unique(np_data))//5)
 # count_threads=2
 # part_data=len(data)//count_threads
 # threads = []
@@ -52,8 +54,10 @@ print(len(data)//5)
 #     threads.append(t)
 #     t.start()
 # print(list(data))
-tree = pybktree.BKTree(fuzzy_distance, data)
-
+tree = pybktree.BKTree(fuzzy_distance, np_data[1])
+print("--- %s seconds main ---" % (time.time() - start_time))
+for frame in np_data:
+    tree.add(frame)
 print(tree.find(last_foto, 10))
 
 print(tree)
@@ -69,3 +73,12 @@ print(tree)
 
 
 print("--- %s seconds main ---" % (time.time() - start_time))
+
+name = "not_aneta"
+
+while name!= "aneta":
+
+    name = input()
+    start_time2 = time.time()
+    print(tree.find(name, 10))
+    print("--- %s seconds main ---" % (time.time() - start_time2))
