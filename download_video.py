@@ -13,6 +13,16 @@ def download_video(url):
 
     return stream.default_filename
 
+def delete_video(file_name):
+    SAVE_PATH = sys.path[0] or os.path.dirname(os.path.realpath(sys.argv[0])) or os.getcwd()
+
+    try:
+        os.remove(SAVE_PATH+'\\'+file_name)
+    except OSError:
+       print(OSError)
+
+    return
+
 
 if __name__ == '__main__':
     start_time = time.time()

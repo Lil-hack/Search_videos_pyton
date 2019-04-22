@@ -8,7 +8,10 @@ import sys
 import io
 
 def video_to_pHash(video_name, uuid=0):
+    """
 
+    :rtype: object
+    """
     cap = cv2.VideoCapture(video_name)
     keys = 'uuid', 'hash', 'frame'
     mas_hash = []
@@ -29,9 +32,9 @@ def video_to_pHash(video_name, uuid=0):
 
     np_data = np.asarray(mas_hash)
 
-    return np.unique(np_data)
+    return np_data
 
-
-start_time = time.time()
-print(video_to_pHash('Whatsapp Love Status Video2017(20Sec).mp4',0))
-print("--- %s seconds main ---" % (time.time() - start_time))
+if __name__ == '__main__':
+    start_time = time.time()
+    print(video_to_pHash('Whatsapp Love Status Video2017(20Sec).mp4',0))
+    print("--- %s seconds main ---" % (time.time() - start_time))
