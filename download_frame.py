@@ -15,4 +15,4 @@ def get_photo_fromYT(url, frame):
 
     return frame
 
-#print(get_photo_fromYT("https://www.youtube.com/watch?v=seI9H18ZvgE",400000))
+#print(get_photo_fromYT("https://www.youtube.com/watch?v=helu9J9uf9Y",500))
